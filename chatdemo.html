@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <title>Ishmael Makitla HTML-5 TogetherJS Lab</title>
+        <meta name="description" content="GDG-Pretoria Bi-Weekly Tech Talk Session : RTC-with-Browsers - NodeJS-based Chat Tutorial">
+        <meta name="author" content="Ishmael Makitla">		
+		<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    	<style>
+      	.chatbox {
+          width: 300px;
+          float: left;
+          margin: 0 20px 0 20px;
+      		}
+      
+      	h1 {
+          margin-left: 30px;
+      		}
+      
+    	</style>
+		<script>
+			
+			 
+			var timeStamptedClientId = "client-"+Date.now();
+			var sock = new SockJS('http://localhost:8081/gdg_pta_chat');
+						
+ 			sock.onopen = function() {
+     			console.log('onOpen-Event: ');
+     			sock.send(JSON.stringify({message: 'Greetings My Chat Server...', sender: timeStamptedClientId}));
+ 			};
+ 			sock.onmessage = function(e) {
+				console.log("message!");
+ 				console.log(e);
+ 				console.log("Message from server is "+e.data);
+		 	};
+ 			sock.onclose = function() {
+     			console.log('close');
+ 			}; 	
+
+ 			//todo: all you have to do now is add the necessary JQuery bits to send messages that the user has typed into the input area.
+ 			//in fact you can make it look really cool with styling, etc. 
+ 			//please share the changes back!!
+
+ 				
+		</script>
+</head>
+<body> 
+<h1> GDG-Pretoria NodeJS-based Chat Example/Tutoria (Ishmael Makitla, GDG-Lead)</h1>
+	<div id= "chatarea" class="chatbox">		
+		<!--button id='submitMsg' onClick='submitMsg();'>Send</button -->
+		<form><input value="Chat here.."></input></form>
+	</div>
+</body>
+</html>
