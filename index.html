@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Ishmael Makitla HTML-5 TogetherJS Lab</title>
+    <meta name="description" content="GDG-Pretoria Bi-Weekly Tech Talk Session : RTC-with-Browsers - NodeJS-based Chat Tutorial">
+    <meta name="author" content="Ishmael Makitla">	
+
+    <link href="css/semantic.min.css" type="text/css" rel="stylesheet"></link>
+
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="javascript/semantic.min.js" type="text/javascript"></script>
+    
+    <script>
+		
+    </script>
+
+    <style type="text/css">
+      body, .ui.vertical.divider {
+        color: #696969;
+      }
+       
+      .ui.vertical.divider {
+        margin: 0 4px;
+      }
+       
+      .ui.raised.segment {
+        width: 100%;
+        margin: 5px 10px 5px 10px;
+      }
+
+    </style>
+</head>
+<body> 
+	
+<div class="container ui raised segment"> 
+  <h3> GDG-Pretoria NodeJS-based Chat Example/Tutoria (Ishmael Makitla, GDG-Lead)</h3>
+  <div class="ui form segment">   
+    <div class="two fields">
+      <div class="field">
+        <input id="msg_chat" name="chatmessage" placeholder="Enter Message" type="text">
+      </div>
+
+      <button class="ui blue button" id="submit_chat" >Submit</button>
+    </div>
+  </div>
+</div>
+
+
+
+  <script>
+   
+   var timeStamptedClientId = "client-"+Date.now();
+   var sock = new SockJS('http://localhost:8081/gdg_pta_chat');
+
+
+  var msg = $('#msg_chat').val();
+
+  if (msg != "") 
+  {
+    
+    sock.onopen = function() {
+      alert(msg);
+      sock.send(JSON.stringify({message: 'Greetings My Chat Server...', sender: timeStamptedClientId}));
+    };
+    
+  //todo: all you have to do now is add the necessary JQuery bits to send messages that the user has typed into the input area.
+  //in fact you can make it look really cool with styling, etc. 
+  //please share the changes back!!
+  } 
+  else 
+  {
+    alert(msg);  
+  }
+
+   
+   sock.onmessage = function(e) {
+      console.log("message!");
+      console.log(e);
+      console.log("Message from server is "+e.data);
+   };
+
+   sock.onclose = function() {
+      console.log('close');
+   }; 
+
+  $('.ui.form')
+    .form({
+      chatmessage: {
+        identifier : 'chatmessage',
+        rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your Message'
+            }
+        ]
+      }
+    });
+
+  </script>   
+
+</body>
+</html>

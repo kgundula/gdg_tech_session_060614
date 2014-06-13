@@ -23,7 +23,7 @@ var server = http.createServer();
 //handler to handle our normal http requests- in this example, we simply return static chat-page
 server.addListener('request', function(req, res){		
   //this is necessary for us to render the static index.html page which acts as a client
-  fs.readFile("chatdemo.html", "binary", function(err, file) {    
+  fs.readFile("index.html", "binary", function(err, file) {    
          if(err) {    
                      res.writeHeader(500, {"Content-Type": "text/plain"});    
                      res.write(err);    
